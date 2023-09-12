@@ -38,27 +38,19 @@ const DetailBtn = (orderNo) => {
 
   const handleTrackingNumberSearch = () => {
     if (trackingNumber.trim() === '') {
-      // If tracking number is empty, reset the filter and show all shipments
+      
       setShipments(shipmentsFromFile);
     } else {
-      // Otherwise, filter by tracking number
+      
       const filteredShipments = shipmentsFromFile.filter(
         (shipment) => shipment.trackingNo === trackingNumber
       );
       setShipments(filteredShipments);
     }
-    setDisplayInput(false); // Hide the input box after applying the filter
-    setTrackingNumber(''); // Reset the tracking number input
+    setDisplayInput(false); 
+    setTrackingNumber(''); 
   };
   
-  
-  
-  
-  
-  
-  
-
-
   return (
     <div className={styles["table-container"]}>
       <table className={styles["table"]}>
@@ -73,9 +65,7 @@ const DetailBtn = (orderNo) => {
             setDisplayInput(true); 
             }} /> <br />
             {displayInput && (
-            <input 
-            type="text"
-            value={trackingNumber}
+            <input type="text" value={trackingNumber}
             onChange={(e) => setTrackingNumber(e.target.value)}
             className={styles['short-input']}
              />
