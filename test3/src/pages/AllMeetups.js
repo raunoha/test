@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MeetupList from '../components/meetups/MeetupList';
 
-const DUMMY_DATA = [
+/*const DUMMY_DATA = [
   {
     id: 'm1',
     title: 'This is a first meetup',
@@ -20,17 +20,52 @@ const DUMMY_DATA = [
     description:
       'This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!',
   },
-];
+];*/
 
 
 function AllMeetups() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedMeetups, setLoadedMeetups] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+fetch("https://test3-e13e1-default-rtdb.europe-west1.firebasedatabase.app/meetups.json"
+)
+.then((response) => {
+  return response.json();
+})
+.then((data) => {
+  const meetups = [];
+
+  for (const key in data) {
+    const meetup = {
+      id: key,
+      ...data[key]
+    };
+
+    meetups.push(meetup);
+  }
+
+  setIsLoading(false);
+  setLoadedMeetups(meetups);
+});
+}, []);
+
+if (isLoading) {
+return (
+<section>
+  <p>Loading...</p>
+</section>
+);
+}
+
   return (
     <section>
     <h1>All Meetups</h1>
-    <MeetupList meetups={DUMMY_DATA} />
+    <MeetupList meetups={loadedMeetups} />
   </section>
   )
-}
+} ;
 
 export default AllMeetups;
 
